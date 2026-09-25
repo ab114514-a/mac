@@ -1,0 +1,23 @@
+name: Build macOS App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile C++/Objective-C++ app
+        run: |
+          clang++ -std=c++17 main.mm -framework Cocoa -framework Foundation -o Monitor
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Monitor-macOS
+          path: Monitor
+          retention-days: 7
